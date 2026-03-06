@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Project</title>
+    <link rel="stylesheet" href="./assets/index.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+</head>
+<style>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    :root {
+        --gold: #b8960c;
+        --gold-light: #d4aa1a;
+        --dark-green: #2d4a2d;
+        --mid-green: #3d6b3d;
+        --olive: #7a8c3a;
+        --cream: #f9f5ee;
+        --text-dark: #1a1a1a;
+        --text-muted: #5a5a5a;
+        --bg: #0d0f14;
+        --card: #15181f;
+        --border: #2a2e3a;
+        --accent: #e8a84c;
+        --accent2: #f0c47a;
+        --text: #f0ece4;
+        --muted: #7a7f8e;
+        --success: #4caf82;
+        --input-bg: #1c2030;
+    }
+
+    body {
+        font-family: 'Jost', sans-serif;
+        min-height: 100vh;
+        padding: 0px 0px;
+    }
+
+    .Main_Content {
+        width: 100%;
+        height: 100vh;
+        background-image: url("https://static.vecteezy.com/system/resources/thumbnails/001/849/553/small/modern-gold-background-free-vector.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+        padding: 30px;
+    }
+
+    .box {
+        display: flex;
+        gap: 25px;
+    }
+
+    .Main_Content a {
+        text-decoration: none;
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    @media (max-width:768px) {
+
+        .box {
+            gap: 15px;
+        }
+
+        .Main_Content a {
+            font-size: 16px;
+        }
+
+    }
+
+
+    .section-wrapper {
+        width: 100%;
+        padding-top: 40px;
+    }
+
+    /* Header */
+    .brand-header {
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    .brand-script {
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+        color: var(--gold);
+        letter-spacing: 0.02em;
+    }
+
+    .brand-tagline {
+        font-size: clamp(0.65rem, 1.5vw, 0.78rem);
+        letter-spacing: 0.2em;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        margin-top: 2px;
+    }
+
+    .section-title {
+        text-align: center;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        font-weight: 600;
+        color: var(--dark-green);
+        margin-bottom: 48px;
+        letter-spacing: 0.04em;
+    }
+
+    .section-title span {
+        display: block;
+        font-size: 0.9em;
+    }
+
+    /* === WHEEL CONTAINER === */
+    .wheel-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    /* The circular wheel */
+    .wheel {
+        position: relative;
+        width: clamp(260px, 50vw, 340px);
+        height: clamp(260px, 50vw, 340px);
+        flex-shrink: 0;
+    }
+
+    .wheel-ring {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: conic-gradient(var(--gold) 0deg 180deg,
+                var(--dark-green) 180deg 360deg);
+        box-shadow: 0 8px 40px rgba(45, 74, 45, 0.25);
+    }
+
+    .wheel-inner {
+        position: absolute;
+        inset: 14%;
+        border-radius: 50%;
+        background: var(--cream);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 4 icon segments */
+    .icon-btn {
+        position: absolute;
+        width: clamp(52px, 10vw, 68px);
+        height: clamp(52px, 10vw, 68px);
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s cubic-bezier(.34, 1.56, .64, 1), box-shadow 0.3s;
+        outline: none;
+        z-index: 10;
+    }
+
+    .icon-btn svg {
+        width: 52%;
+        height: 52%;
+        fill: white;
+        pointer-events: none;
+    }
+
+    /* Position: top, right, bottom, left */
+    .icon-btn.top {
+        top: -10%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        background: var(--gold);
+    }
+
+    .icon-btn.right {
+        right: -10%;
+        top: 50%;
+        transform: translate(0, -50%);
+        background: var(--dark-green);
+    }
+
+    .icon-btn.bottom {
+        bottom: -10%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        background: var(--mid-green);
+    }
+
+    .icon-btn.left {
+        left: -10%;
+        top: 50%;
+        transform: translate(0, -50%);
+        background: var(--olive);
+    }
+
+    .icon-btn.top:hover {
+        transform: translate(-50%, 0) scale(1.18);
+        box-shadow: 0 6px 24px rgba(184, 150, 12, 0.5);
+    }
+
+    .icon-btn.right:hover {
+        transform: translate(0, -50%) scale(1.18);
+        box-shadow: 0 6px 24px rgba(45, 74, 45, 0.5);
+    }
+
+    .icon-btn.bottom:hover {
+        transform: translate(-50%, 0) scale(1.18);
+        box-shadow: 0 6px 24px rgba(61, 107, 61, 0.5);
+    }
+
+    .icon-btn.left:hover {
+        transform: translate(0, -50%) scale(1.18);
+        box-shadow: 0 6px 24px rgba(122, 140, 58, 0.5);
+    }
+
+    .icon-btn.active {
+        transform: translate(-50%, 0) scale(1.22) !important;
+    }
+
+    .icon-btn.right.active {
+        transform: translate(0, -50%) scale(1.22) !important;
+    }
+
+    .icon-btn.bottom.active {
+        transform: translate(-50%, 0) scale(1.22) !important;
+    }
+
+    .icon-btn.left.active {
+        transform: translate(0, -50%) scale(1.22) !important;
+    }
+
+    /* Center label */
+    .wheel-center-label {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(0.75rem, 2vw, 1rem);
+        color: var(--text-muted);
+        text-align: center;
+        line-height: 1.3;
+        padding: 12px;
+        pointer-events: none;
+    }
+
+    /* === INFO CARDS === */
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        width: 100%;
+    }
+
+    .info-card {
+        background: white;
+        border-radius: 16px;
+        padding: 28px 24px;
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        opacity: 0.45;
+        filter: grayscale(0.3);
+    }
+
+    .info-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        transition: height 0.4s ease;
+        height: 0;
+    }
+
+    .info-card[data-card="top"]::before {
+        background: var(--gold);
+    }
+
+    .info-card[data-card="right"]::before {
+        background: var(--dark-green);
+    }
+
+    .info-card[data-card="bottom"]::before {
+        background: var(--mid-green);
+    }
+
+    .info-card[data-card="left"]::before {
+        background: var(--olive);
+    }
+
+    .info-card.active {
+        opacity: 1;
+        filter: none;
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(45, 74, 45, 0.12);
+    }
+
+    .info-card.active::before {
+        height: 100%;
+    }
+
+    .info-card[data-card="top"].active {
+        border-color: var(--gold);
+    }
+
+    .info-card[data-card="right"].active {
+        border-color: var(--dark-green);
+    }
+
+    .info-card[data-card="bottom"].active {
+        border-color: var(--mid-green);
+    }
+
+    .info-card[data-card="left"].active {
+        border-color: var(--olive);
+    }
+
+    .card-icon-dot {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .card-icon-dot svg {
+        width: 55%;
+        height: 55%;
+        fill: white;
+    }
+
+    .info-card[data-card="top"] .card-icon-dot {
+        background: var(--gold);
+    }
+
+    .info-card[data-card="right"] .card-icon-dot {
+        background: var(--dark-green);
+    }
+
+    .info-card[data-card="bottom"] .card-icon-dot {
+        background: var(--mid-green);
+    }
+
+    .info-card[data-card="left"] .card-icon-dot {
+        background: var(--olive);
+    }
+
+    .card-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1rem, 2.2vw, 1.25rem);
+        font-weight: 600;
+        color: var(--dark-green);
+        margin-bottom: 10px;
+        line-height: 1.3;
+    }
+
+    .card-text {
+        font-size: clamp(0.78rem, 1.4vw, 0.88rem);
+        color: var(--text-muted);
+        line-height: 1.7;
+        font-weight: 300;
+    }
+
+    /* hover instruction */
+    .hover-hint {
+        text-align: center;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 4px;
+        opacity: 0.7;
+    }
+
+    .hover-hint span {
+        display: inline-block;
+        animation: pulse-hint 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-hint {
+
+        0%,
+        100% {
+            opacity: 0.5;
+        }
+
+        50% {
+            opacity: 1;
+        }
+    }
+
+    /* === DESKTOP LAYOUT: wheel centered, cards around === */
+    @media (min-width: 768px) {
+        .wheel-area {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            grid-template-rows: auto auto;
+            gap: 0 32px;
+            align-items: center;
+        }
+
+        .wheel {
+            grid-column: 2;
+            grid-row: 1 / 3;
+        }
+
+        .cards-grid {
+            display: contents;
+        }
+
+        .info-card {
+            margin: 12px 0;
+        }
+
+        .info-card[data-card="top"] {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .info-card[data-card="left"] {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .info-card[data-card="right"] {
+            grid-column: 3;
+            grid-row: 1;
+        }
+
+        .info-card[data-card="bottom"] {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        .hover-hint {
+            grid-column: 1 / 4;
+            grid-row: 3;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .cards-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .section-title {
+            margin-bottom: 32px;
+        }
+
+        .wheel {
+            width: 200px;
+            height: 200px;
+        }
+    }
+
+    /* Connector lines on desktop (decorative) */
+    .connector {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        .connector {
+            display: block;
+            position: absolute;
+            pointer-events: none;
+        }
+    }
+
+
+    /* =====================
+     DESKTOP / TABLET TABS
+     ===================== */
+    .portfolio-section {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 40px 24px 60px;
+    }
+
+    /* Tab nav */
+    .tab-nav {
+        display: flex;
+        border-bottom: 1px solid var(--light);
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .tab-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-btn {
+        flex-shrink: 0;
+        background: none;
+        border: none;
+        padding: 14px 28px;
+        font-family: 'Raleway', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--mid);
+        cursor: pointer;
+        position: relative;
+        transition: color 0.25s;
+    }
+
+    .tab-btn::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--tab-active-border);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .tab-btn:hover {
+        color: var(--charcoal);
+    }
+
+    .tab-btn.active {
+        color: var(--charcoal);
+    }
+
+    .tab-btn.active::after {
+        transform: scaleX(1);
+    }
+
+    /* Tab panels */
+    .tab-panels {
+        margin-top: 28px;
+    }
+
+    .tab-panel {
+        display: none;
+        animation: fadeIn 0.4s ease;
+    }
+
+    .tab-panel.active {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .panel-image {
+        width: 100%;
+        height: 480px;
+        object-fit: cover;
+        border-radius: var(--img-radius);
+        display: block;
+        background: #ddd;
+    }
+
+    .panel-image-placeholder {
+        width: 100%;
+        height: 480px;
+        border-radius: var(--img-radius);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mid);
+    }
+
+    .panel-body {
+        padding: 32px 0 0;
+    }
+
+    .panel-category {
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .panel-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+        font-weight: 400;
+        color: var(--charcoal);
+        line-height: 1.25;
+        margin-bottom: 18px;
+    }
+
+    .panel-text {
+        font-size: 0.9rem;
+        line-height: 1.85;
+        color: var(--mid);
+        font-weight: 300;
+        max-width: 680px;
+    }
+
+    .panel-image-placeholder img,
+    .acc-image-placeholder img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /*=====
+     MOBILE ACCORDION
+     ===================== */
+    .accordion {
+        display: none;
+    }
+
+    .acc-item {
+        border-bottom: 1px solid var(--light);
+    }
+
+    .acc-trigger {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 18px 20px;
+        text-align: center;
+        font-family: 'Raleway', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--mid);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: color 0.25s, background 0.25s;
+        position: relative;
+    }
+
+    .acc-trigger::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background: var(--charcoal);
+        transition: width 0.3s ease;
+    }
+
+    .acc-trigger.open {
+        color: var(--charcoal);
+        background: #f0ede8;
+    }
+
+    .acc-trigger.open::after {
+        width: 60px;
+    }
+
+    .acc-content {
+        display: none;
+        overflow: hidden;
+    }
+
+    .acc-content.open {
+        display: block;
+        animation: fadeIn 0.35s ease;
+    }
+
+    .acc-image {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        display: block;
+        background: #ddd;
+    }
+
+    .acc-image-placeholder {
+        width: 100%;
+        height: 260px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mid);
+    }
+
+    .acc-body {
+        padding: 24px 20px 32px;
+    }
+
+    .acc-category {
+        font-size: 0.65rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .acc-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.35rem;
+        font-weight: 400;
+        margin-bottom: 14px;
+        line-height: 1.3;
+    }
+
+    .acc-text {
+        font-size: 0.85rem;
+        line-height: 1.8;
+        color: var(--mid);
+        font-weight: 300;
+    }
+
+    /* =====================
+     RESPONSIVE BREAKPOINTS
+     ===================== */
+    @media (max-width: 600px) {
+        .portfolio-section {
+            display: none;
+        }
+
+        .accordion {
+            display: block;
+        }
+    }
+
+    @media (min-width: 601px) {
+        .portfolio-section {
+            display: block;
+        }
+
+        .accordion {
+            display: none;
+        }
+    }
+
+    h1 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 24px;
+        color: #111;
+    }
+
+    /* ========================
+     GALLERY WRAPPER
+     ======================== */
+    .gallery-outer {
+        background: #b0b8c8;
+        border-radius: 10px;
+        padding: 18px 50px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        overflow: hidden;
+    }
+
+    /* Prev / Next buttons */
+    .nav-btn {
+        position: absolute;
+        z-index: 20;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.55);
+        border: none;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        flex-shrink: 0;
+    }
+
+    .nav-btn:hover {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    .nav-btn.prev {
+        left: 10px;
+    }
+
+    .nav-btn.next {
+        right: 10px;
+    }
+
+    /* Cards track */
+    .cards-track {
+        display: flex;
+        gap: 14px;
+        width: 100%;
+        transition: transform 0.4s ease;
+    }
+
+    /* Individual BA card */
+    .ba-card {
+        flex-shrink: 0;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        cursor: ew-resize;
+        user-select: none;
+        touch-action: none;
+    }
+
+    /* DESKTOP: 3 cards visible */
+    .ba-card {
+        width: calc((100% - 28px) / 3);
+        height: 200px;
+    }
+
+    /* Before image (full width behind) */
+    .img-before,
+    .img-after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+        display: block;
+    }
+
+    /* Placeholder colored divs */
+    .img-before {
+        z-index: 1;
+    }
+
+    /* After image clipped to left side */
+    .after-wrap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 2;
+    }
+
+    .after-wrap .img-after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        /* will be overridden by JS to match card width */
+        height: 100%;
+    }
+
+    /* Divider line */
+    .divider {
+        position: absolute;
+        top: 0;
+        width: 2px;
+        height: 100%;
+        background: white;
+        z-index: 3;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+
+    /* Divider handle */
+    .handle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 4;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        pointer-events: none;
+    }
+
+    .handle svg {
+        width: 14px;
+        height: 14px;
+        fill: #555;
+    }
+
+    /* Labels */
+    .label {
+        position: absolute;
+        bottom: 10px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: white;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 3px 8px;
+        border-radius: 3px;
+        z-index: 5;
+        pointer-events: none;
+    }
+
+    .label.before {
+        left: 10px;
+    }
+
+    .label.after {
+        right: 10px;
+    }
+
+    /* ========================
+     MOBILE
+     ======================== */
+    @media (max-width: 600px) {
+        .gallery-outer {
+            padding: 16px 44px;
+        }
+
+        .nav-btn {
+            width: 32px;
+            height: 32px;
+            font-size: 0.85rem;
+        }
+
+        .ba-card {
+            width: 100% !important;
+            height: 300px !important;
+        }
+
+        .cards-track {
+            gap: 0;
+        }
+    }
+
+    .card-main {
+        background: var(--bg);
+        font-family: 'DM Sans', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 20px;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    .card-main::before {
+        content: '';
+        position: fixed;
+        top: -200px;
+        left: -200px;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(232, 168, 76, 0.08) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .card-main::after {
+        content: '';
+        position: fixed;
+        bottom: -200px;
+        right: -200px;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(76, 175, 130, 0.06) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        width: 100%;
+        max-width: 520px;
+        padding: 48px 44px;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    /* Step indicator */
+    .steps {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        margin-bottom: 40px;
+    }
+
+    .step-dot {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.4s ease;
+        position: relative;
+        z-index: 1;
+    }
+
+    .step-dot.done {
+        background: var(--accent);
+        color: #0d0f14;
+        box-shadow: 0 0 20px rgba(232, 168, 76, 0.4);
+    }
+
+    .step-dot.active {
+        background: transparent;
+        border: 2px solid var(--accent);
+        color: var(--accent);
+        box-shadow: 0 0 20px rgba(232, 168, 76, 0.25);
+    }
+
+    .step-dot.inactive {
+        background: var(--border);
+        color: var(--muted);
+        border: 2px solid transparent;
+    }
+
+    .step-line {
+        flex: 1;
+        height: 2px;
+        background: var(--border);
+        max-width: 80px;
+        transition: background 0.4s ease;
+    }
+
+    .step-line.filled {
+        background: var(--accent);
+    }
+
+    /* Labels */
+    .step-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        margin-bottom: 32px;
+        padding: 0 2px;
+    }
+
+    .step-label {
+        font-size: 11px;
+        color: var(--muted);
+        text-align: center;
+        flex: 1;
+        transition: color 0.3s;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .step-label.active {
+        color: var(--accent);
+    }
+
+    /* Header */
+    .form-header {
+        margin-bottom: 32px;
+    }
+
+    .form-header h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 26px;
+        color: var(--text);
+        margin-bottom: 6px;
+    }
+
+    .form-header p {
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 300;
+    }
+
+    /* Fields */
+    .field {
+        margin-bottom: 20px;
+    }
+
+    .field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+    }
+
+    .field input,
+    .field select {
+        width: 100%;
+        background: var(--input-bg);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        padding: 13px 16px;
+        color: var(--text);
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.25s, box-shadow 0.25s;
+        appearance: none;
+    }
+
+    .field input::placeholder {
+        color: #3d4252;
+    }
+
+    .field input:focus,
+    .field select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(232, 168, 76, 0.1);
+    }
+
+    .field select option {
+        background: #1c2030;
+    }
+
+    .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    /* Buttons */
+    .btn-row {
+        display: flex;
+        gap: 12px;
+        margin-top: 36px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 14px 20px;
+        border-radius: 10px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        border: none;
+        transition: all 0.25s ease;
+        letter-spacing: 0.3px;
+    }
+
+    .btn-back {
+        background: transparent;
+        border: 1.5px solid var(--border);
+        color: var(--muted);
+    }
+
+    .btn-back:hover {
+        border-color: var(--text);
+        color: var(--text);
+    }
+
+    .btn-next {
+        background: var(--accent);
+        color: #0d0f14;
+        font-weight: 600;
+    }
+
+    .btn-next:hover {
+        background: var(--accent2);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px rgba(232, 168, 76, 0.3);
+    }
+
+    .btn-next:active {
+        transform: translateY(0);
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, var(--success), #3d9e6e);
+        color: black;
+        font-weight: 600;
+        width: 100%;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px rgba(76, 175, 130, 0.3);
+    }
+
+    /* Step panels */
+    .step-panel {
+        display: none;
+        animation: fadeUp 0.4s ease;
+    }
+
+    .step-panel.active {
+        display: block;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Success screen */
+    .success-screen {
+        display: none;
+        text-align: center;
+        padding: 20px 0;
+        animation: fadeUp 0.5s ease;
+    }
+
+    .success-screen.active {
+        display: block;
+    }
+
+    .success-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(76, 175, 130, 0.12);
+        border: 2px solid var(--success);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+        font-size: 36px;
+        box-shadow: 0 0 40px rgba(76, 175, 130, 0.2);
+    }
+
+    .success-screen h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        color: var(--text);
+        margin-bottom: 10px;
+    }
+
+    .success-screen p {
+        font-size: 15px;
+        color: var(--muted);
+        line-height: 1.6;
+    }
+
+    .success-tag {
+        display: inline-block;
+        margin-top: 20px;
+        background: rgba(76, 175, 130, 0.1);
+        border: 1px solid rgba(76, 175, 130, 0.3);
+        color: var(--success);
+        padding: 6px 18px;
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+
+    /* Review summary on step 3 */
+    .summary {
+        background: rgba(232, 168, 76, 0.04);
+        border: 1px solid rgba(232, 168, 76, 0.15);
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+    }
+
+    .summary-title {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--accent);
+        margin-bottom: 12px;
+        font-weight: 500;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        padding: 4px 0;
+    }
+
+    .summary-row span:first-child {
+        color: var(--muted);
+    }
+
+    .summary-row span:last-child {
+        color: var(--text);
+        font-weight: 500;
+    }
+
+    /* ── Responsive: Tablet (max 600px) ── */
+    @media (max-width: 600px) {
+        body {
+            align-items: flex-start;
+            padding: 12px;
+        }
+
+        .card {
+            padding: 32px 20px 28px;
+            border-radius: 18px;
+            margin: 0 auto;
+        }
+
+        .form-header h2 {
+            font-size: 22px;
+        }
+
+        .form-header p {
+            font-size: 13px;
+        }
+
+        /* Step dots slightly smaller */
+        .step-dot {
+            width: 30px;
+            height: 30px;
+            font-size: 12px;
+        }
+
+        .step-line {
+            max-width: 48px;
+        }
+
+        .step-label {
+            font-size: 10px;
+        }
+
+        /* Stack First/Last name on mobile */
+        .field-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .field input,
+        .field select {
+            font-size: 16px;
+            /* prevents iOS zoom on focus */
+            padding: 12px 14px;
+        }
+
+        .btn {
+            padding: 13px 16px;
+            font-size: 14px;
+        }
+
+        .btn-row {
+            margin-top: 24px;
+            gap: 10px;
+        }
+
+        .summary {
+            padding: 14px 14px;
+        }
+
+        .summary-row {
+            font-size: 12px;
+            flex-wrap: wrap;
+            gap: 2px;
+        }
+
+        .summary-row span:last-child {
+            word-break: break-word;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            font-size: 28px;
+        }
+
+        .success-screen h2 {
+            font-size: 22px;
+        }
+
+        .success-screen p {
+            font-size: 13px;
+        }
+    }
+
+    /* ── Responsive: Very small phones (max 360px) ── */
+    @media (max-width: 360px) {
+        .card {
+            padding: 24px 14px 20px;
+            border-radius: 14px;
+        }
+
+        .form-header h2 {
+            font-size: 19px;
+        }
+
+        .step-dot {
+            width: 26px;
+            height: 26px;
+            font-size: 11px;
+        }
+
+        .step-line {
+            max-width: 32px;
+        }
+
+        .step-label {
+            font-size: 9px;
+            letter-spacing: 0;
+        }
+
+        .btn-row {
+            flex-direction: column;
+        }
+
+        .btn-back {
+            order: 2;
+        }
+
+        .btn-next {
+            order: 1;
+        }
+    }
+
+    /* ── Responsive: Large screens ── */
+    @media (min-width: 900px) {
+        .card {
+            padding: 56px 52px;
+        }
+    }
+</style>
+
+<body>
+    <section class="1">
+        <div class="main_Container">
+            <div class="Main_Content">
+                <div class="box">
+                    <a class="Home" href="#">Home</a>
+                    <a class="About" href="#">About</a>
+                    <a class="Contact_Us" href="#">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-wrapper">
+        <div class="brand-header">
+            <div class="brand-script">Larissa's Hope for Recovery</div>
+            <div class="brand-tagline">There is Hope, There is Life!</div>
+        </div>
+
+        <h2 class="section-title">Why Choose <span>Us</span></h2>
+
+        <div class="wheel-area">
+
+            <!-- WHEEL -->
+            <div class="wheel">
+                <div class="wheel-ring"></div>
+                <div class="wheel-inner">
+                </div>
+
+                <!-- Top icon: Top-Rated -->
+                <button class="icon-btn top" data-target="top" aria-label="Top-Rated Professionals">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z" />
+                    </svg>
+                </button>
+
+                <!-- Right icon: Satisfaction -->
+                <button class="icon-btn right" data-target="right" aria-label="Satisfaction Guaranteed">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="white" stroke-width="2"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+
+                <!-- Bottom icon: Passionate -->
+                <button class="icon-btn bottom" data-target="bottom" aria-label="Passionate About Healing">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 21C12 21 3 13.5 3 8a5 5 0 0110 0 5 5 0 0110 0c0 5.5-9 13-9 13z" />
+                    </svg>
+                </button>
+
+                <!-- Left icon: Trauma Care -->
+                <button class="icon-btn left" data-target="left" aria-label="Best in Trauma Care">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M8 6H5a2 2 0 00-2 2v3m5-5h8M8 6V4m8 2h3a2 2 0 012 2v3m-5-5V4M3 11v5a2 2 0 002 2h3m-5-7h18M21 11v5a2 2 0 01-2 2h-3m-8 0v3m0-3h8m0 0v3"
+                            stroke="white" stroke-width="2" fill="none" stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- CARDS -->
+            <div class="cards-grid">
+
+                <div class="info-card" data-card="top">
+                    <div class="card-icon-dot">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z" />
+                        </svg>
+                    </div>
+                    <div class="card-title">Why Choose Larissa's Hope for Recovery?</div>
+                    <div class="card-text">Top-Rated Treatment Professionals in Los Angeles County. We are proud to be
+                        recognized as one of the top trauma-informed care and self-esteem empowerment providers in the
+                        region. At Larissa's Hope for Recovery, we don't just offer treatment—we offer transformation.
+                    </div>
+                </div>
+
+                <div class="info-card" data-card="left">
+                    <div class="card-icon-dot">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M8 6H5a2 2 0 00-2 2v3m5-5h8M8 6V4m8 2h3a2 2 0 012 2v3m-5-5V4M3 11v5a2 2 0 002 2h3m-5-7h18M21 11v5a2 2 0 01-2 2h-3m-8 0v3m0-3h8m0 0v3"
+                                stroke="white" stroke-width="2" fill="none" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="card-title">The Best in Trauma &amp; Empowerment Care</div>
+                    <div class="card-text">We specialize in professional, compassionate support that helps individuals
+                        reclaim their power. Our trauma-informed approach creates safe spaces for deep healing, growth,
+                        and lasting empowerment.</div>
+                </div>
+
+                <div class="info-card" data-card="right">
+                    <div class="card-icon-dot">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="white" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="card-title">Satisfaction Guaranteed</div>
+                    <div class="card-text">At Larissa's Hope for Recovery, your healing experience is our mission. We
+                        stand behind our treatment modalities and are committed to ensuring that every client feels
+                        seen, supported, and empowered throughout their journey.</div>
+                </div>
+
+                <div class="info-card" data-card="bottom">
+                    <div class="card-icon-dot">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 21C12 21 3 13.5 3 8a5 5 0 0110 0 5 5 0 0110 0c0 5.5-9 13-9 13z" />
+                        </svg>
+                    </div>
+                    <div class="card-title">Passionate About Your Healing Journey</div>
+                    <div class="card-text">We believe that healing is personal, and so is our approach. We're passionate
+                        about helping individuals bring their dreams to life—so they can live with purpose, joy, and
+                        authentic connection.</div>
+                </div>
+
+            </div>
+
+            <p class="hover-hint"><span>↑ Hover or tap an icon to explore</span></p>
+
+        </div><!-- wheel-area -->
+    </div>
+
+    <!-- ========================
+     DESKTOP / TABLET LAYOUT
+     ======================== -->
+    <div class="portfolio-section">
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn active" role="tab" data-tab="bathrooms">Bathrooms</button>
+            <button class="tab-btn" role="tab" data-tab="kitchens">Kitchens</button>
+            <button class="tab-btn" role="tab" data-tab="builtins">Built-Ins</button>
+            <button class="tab-btn" role="tab" data-tab="closets">Closets</button>
+            <button class="tab-btn" role="tab" data-tab="homeoffice">Home Office</button>
+        </nav>
+
+        <div class="tab-panels">
+
+            <div class="tab-panel active" id="tab-bathrooms">
+                <div class="panel-image-placeholder">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsFaFdOMFbFPtGBM84uqQvH_4fpPf-nZn3gw&s"
+                        alt="Bathroom Image" width="100%">
+                </div>
+                <div class="panel-body">
+                    <div class="panel-category">Bathrooms</div>
+                    <h2 class="panel-title">Spa-quality craftsmanship<br>for your private retreat</h2>
+                    <p class="panel-text">Our custom bathroom cabinetry transforms ordinary spaces into personal
+                        sanctuaries. Every vanity, medicine cabinet, and storage solution is precision-crafted to
+                        maximize beauty and function—with finishes that stand up to daily life while looking
+                        effortlessly refined.</p>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="tab-kitchens">
+                <div class="panel-image-placeholder">
+                    <img src="https://hips.hearstapps.com/hmg-prod/images/edc100124gambrel-006-66e0bc34ac150.jpg?crop=0.688xw:1.00xh;0.276xw,0&resize=1200:*"
+                        alt="Kitchens Image" width="100%">
+                </div>
+                <div class="panel-body">
+                    <div class="panel-category">Kitchens</div>
+                    <h2 class="panel-title">The heart of your home,<br>elevated by design</h2>
+                    <p class="panel-text">A beautifully designed kitchen is the soul of every household. Our cabinetry
+                        is built to seamlessly integrate with your layout, lifestyle, and aesthetic—whether you prefer
+                        sleek modern lines or timeless shaker style. Crafted to last decades, not just years.</p>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="tab-builtins">
+                <div class="panel-image-placeholder">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW7GFQ9MmTEGIxRl2pOuN9_wVQFFDWYq3zjw&s  "
+                        alt="builtins Image" width="100%">
+                </div>
+                <div class="panel-body">
+                    <div class="panel-category">Built-Ins</div>
+                    <h2 class="panel-title">Inspired cabinets for<br>every room in the house</h2>
+                    <p class="panel-text">Well-designed built-in cabinetry will fit seamlessly into your home, like it
+                        was meant to be there all along. It can serve many functions such as a beautiful statement
+                        piece, a subtle integration within the walls surrounding it, and/or a highly functional
+                        installation serving the home on the regular. It is the solution to that unusual space you have
+                        been pondering, the holy grail of entertainment storage and your very own in home-bar or wine
+                        cellar! Whatever it is you would like to achieve within YOUR space, our custom cabinetry can
+                        deliver with style.</p>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="tab-closets">
+                <div class="panel-image-placeholder">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqacMEpLgq6VRBom8Z--bJsmNlmnMsB2CSeogpG0WWCxKvFRQZA3pfi7PRhg&s"
+                        alt="Closets Image" width="100%">
+                </div>
+                <div class="panel-body">
+                    <div class="panel-category">Closets</div>
+                    <h2 class="panel-title">Order and elegance,<br>beautifully organized</h2>
+                    <p class="panel-text">From walk-in wardrobes to reach-in closets, our custom storage systems bring
+                        calm to your daily routine. Adjustable shelving, drawer configurations, and specialty inserts
+                        are designed around how you actually live—making getting dressed feel like a genuine pleasure.
+                    </p>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="tab-homeoffice">
+                <div class="panel-image-placeholder">
+                    <img src="https://cdn.habitusliving.com/wp-content/uploads/2024/02/2.homeoffice.jpg"
+                        alt="homeoffice Image" width="100%">
+                </div>
+                <div class="panel-body">
+                    <div class="panel-category">Home Office</div>
+                    <h2 class="panel-title">Workspaces that inspire<br>focus and creativity</h2>
+                    <p class="panel-text">Your home office should work as hard as you do. Our custom built-in desks,
+                        shelving systems, and filing solutions bring professional-grade organization to your personal
+                        workspace—while keeping the aesthetic cohesive with the rest of your home.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ========================
+     MOBILE ACCORDION LAYOUT
+     ======================== -->
+    <div class="accordion">
+
+        <div class="acc-item">
+            <button class="acc-trigger open" data-acc="bathrooms">Bathrooms</button>
+            <div class="acc-content open" id="acc-bathrooms">
+                <div class="panel-image-placeholder">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsFaFdOMFbFPtGBM84uqQvH_4fpPf-nZn3gw&s"
+                        alt="Bathroom Image" width="100%">
+                </div>
+                <div class="acc-body">
+                    <div class="acc-category">Bathrooms</div>
+                    <h3 class="acc-title">Spa-quality craftsmanship for your private retreat</h3>
+                    <p class="acc-text">Our custom bathroom cabinetry transforms ordinary spaces into personal
+                        sanctuaries. Every vanity and storage solution is precision-crafted to maximize beauty and
+                        function—with finishes that stand up to daily life.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="acc-item">
+            <button class="acc-trigger" data-acc="kitchens">Kitchens</button>
+            <div class="acc-content" id="acc-kitchens">
+                <div class="acc-image-placeholder">
+                    <img src="https://hips.hearstapps.com/hmg-prod/images/edc100124gambrel-006-66e0bc34ac150.jpg?crop=0.688xw:1.00xh;0.276xw,0&resize=1200:*"
+                        alt="kitchens Image" width="100%">
+                </div>
+                <div class="acc-body">
+                    <div class="acc-category">Kitchens</div>
+                    <h3 class="acc-title">The heart of your home, elevated by design</h3>
+                    <p class="acc-text">A beautifully designed kitchen is the soul of every household. Our cabinetry is
+                        built to seamlessly integrate with your layout, lifestyle, and aesthetic—crafted to last
+                        decades, not just years.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="acc-item">
+            <button class="acc-trigger" data-acc="builtins">Built-Ins</button>
+            <div class="acc-content" id="acc-builtins">
+                <div class="acc-image-placeholder">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW7GFQ9MmTEGIxRl2pOuN9_wVQFFDWYq3zjw&s  "
+                        alt="builtins Image" width="100%">
+                </div>
+                <div class="acc-body">
+                    <div class="acc-category">Built-Ins</div>
+                    <h3 class="acc-title">Inspired cabinets for every room in the house</h3>
+                    <p class="acc-text">Well-designed built-in cabinetry will fit seamlessly into your home, like it was
+                        meant to be there all along. It can serve many functions such as a beautiful statement piece, a
+                        subtle integration within the walls surrounding it, and/or a highly functional installation
+                        serving the home on the regular. It is the solution to that unusual space you have been
+                        pondering, the holy grail of entertainment storage and your very own in home-bar or wine cellar!
+                        Whatever it is you would like to achieve within YOUR space, our custom cabinetry can deliver
+                        with style.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="acc-item">
+            <button class="acc-trigger" data-acc="closets">Closets</button>
+            <div class="acc-content" id="acc-closets">
+                <div class="acc-image-placeholder">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqacMEpLgq6VRBom8Z--bJsmNlmnMsB2CSeogpG0WWCxKvFRQZA3pfi7PRhg&s"
+                        alt="Closets Image" width="100%">
+                </div>
+                <div class="acc-body">
+                    <div class="acc-category">Closets</div>
+                    <h3 class="acc-title">Order and elegance, beautifully organized</h3>
+                    <p class="acc-text">From walk-in wardrobes to reach-in closets, our custom storage systems bring
+                        calm to your daily routine. Adjustable shelving, drawer configurations, and specialty inserts
+                        are designed around how you actually live.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="acc-item">
+            <button class="acc-trigger" data-acc="homeoffice">Home Office</button>
+            <div class="acc-content" id="acc-homeoffice">
+                <div class="acc-image-placeholder">
+                    <img src="https://cdn.habitusliving.com/wp-content/uploads/2024/02/2.homeoffice.jpg"
+                        alt="homeoffice Image" width="100%">
+                </div>
+                <div class="acc-body">
+                    <div class="acc-category">Home Office</div>
+                    <h3 class="acc-title">Workspaces that inspire focus and creativity</h3>
+                    <p class="acc-text">Your home office should work as hard as you do. Our custom built-in desks,
+                        shelving systems, and filing solutions bring professional-grade organization to your personal
+                        workspace.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <h1>Sliding Gallery with Before &amp; After Photos</h1>
+
+    <div class="gallery-outer">
+        <button class="nav-btn prev" id="prevBtn">&#8249;</button>
+
+        <div class="cards-track" id="track">
+
+            <!-- Card 1: Old bathroom → Renovated bathroom -->
+            <div class="ba-card" data-split="50">
+                <img class="img-before" src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80"
+                    alt="Before - Old Bathroom">
+                <div class="after-wrap">
+                    <img class="img-after" src="https://images.unsplash.com/photo-1620626011761-996317702519?w=800&q=80"
+                        alt="After - Renovated Bathroom">
+                </div>
+                <div class="divider"></div>
+                <div class="handle">
+                    <svg viewBox="0 0 20 20">
+                        <path d="M7 4l-4 6 4 6M13 4l4 6-4 6" />
+                    </svg>
+                </div>
+                <span class="label before">Before</span>
+                <span class="label after">After</span>
+            </div>
+
+            <!-- Card 2: Old kitchen → Modern kitchen -->
+            <div class="ba-card" data-split="50">
+                <img class="img-before" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80"
+                    alt="Before - Old Kitchen">
+                <div class="after-wrap">
+                    <img class="img-after" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
+                        alt="After - Modern Kitchen">
+                </div>
+                <div class="divider"></div>
+                <div class="handle">
+                    <svg viewBox="0 0 20 20">
+                        <path d="M7 4l-4 6 4 6M13 4l4 6-4 6" />
+                    </svg>
+                </div>
+                <span class="label before">Before</span>
+                <span class="label after">After</span>
+            </div>
+
+            <!-- Card 3: Empty room → Styled living room -->
+            <div class="ba-card" data-split="50">
+                <img class="img-before" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
+                    alt="Before - Empty Room">
+                <div class="after-wrap">
+                    <img class="img-after" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80"
+                        alt="After - Styled Room">
+                </div>
+                <div class="divider"></div>
+                <div class="handle">
+                    <svg viewBox="0 0 20 20">
+                        <path d="M7 4l-4 6 4 6M13 4l4 6-4 6" />
+                    </svg>
+                </div>
+                <span class="label before">Before</span>
+                <span class="label after">After</span>
+            </div>
+
+            <!-- Card 4: Wild garden → Landscaped garden -->
+            <div class="ba-card" data-split="50">
+                <img class="img-before" src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80"
+                    alt="Before - Overgrown Garden">
+                <div class="after-wrap">
+                    <img class="img-after" src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80"
+                        alt="After - Landscaped Garden">
+                </div>
+                <div class="divider"></div>
+                <div class="handle">
+                    <svg viewBox="0 0 20 20">
+                        <path d="M7 4l-4 6 4 6M13 4l4 6-4 6" />
+                    </svg>
+                </div>
+                <span class="label before">Before</span>
+                <span class="label after">After</span>
+            </div>
+
+            <!-- Card 5: Old house exterior → Modern exterior -->
+            <div class="ba-card" data-split="50">
+                <img class="img-before" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80"
+                    alt="Before - Old Exterior">
+                <div class="after-wrap">
+                    <img class="img-after" src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80"
+                        alt="After - Modern Exterior">
+                </div>
+                <div class="divider"></div>
+                <div class="handle">
+                    <svg viewBox="0 0 20 20">
+                        <path d="M7 4l-4 6 4 6M13 4l4 6-4 6" />
+                    </svg>
+                </div>
+                <span class="label before">Before</span>
+                <span class="label after">After</span>
+            </div>
+
+        </div><!-- /track -->
+
+        <button class="nav-btn next" id="nextBtn">&#8250;</button>
+    </div>
+
+    <section class="card-main">
+        <div class="card">
+
+            <!-- Step Tracker -->
+            <div class="steps" id="stepTracker">
+                <div class="step-dot active" id="dot1">1</div>
+                <div class="step-line" id="line1"></div>
+                <div class="step-dot inactive" id="dot2">2</div>
+                <div class="step-line" id="line2"></div>
+                <div class="step-dot inactive" id="dot3">3</div>
+            </div>
+            <div class="step-labels" id="stepLabels">
+                <span class="step-label active" id="lbl1">Organization</span>
+                <span class="step-label" id="lbl2">Contact</span>
+                <span class="step-label" id="lbl3">Review</span>
+            </div>
+
+            <!-- Step 1: Organization Info -->
+            <div class="step-panel active" id="panel1">
+                <div class="form-header">
+                    <h2>Organization Details</h2>
+                    <p>Tell us about your organization to get started.</p>
+                </div>
+
+                <div class="field">
+                    <label>Country</label>
+                    <select id="country">
+                        <option value="" disabled selected>Select your country</option>
+                        <option>India</option>
+                        <option>United States</option>
+                        <option>United Kingdom</option>
+                        <option>Canada</option>
+                        <option>Australia</option>
+                        <option>Germany</option>
+                        <option>France</option>
+                        <option>Japan</option>
+                        <option>UAE</option>
+                        <option>Singapore</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Account Role</label>
+                    <select id="role">
+                        <option value="" disabled selected>Select your role</option>
+                        <option>Admin</option>
+                        <option>Manager</option>
+                        <option>Developer</option>
+                        <option>Analyst</option>
+                        <option>Viewer</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Organization Name</label>
+                    <input type="text" id="orgName" placeholder="e.g. Acme Technologies Pvt. Ltd." />
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn btn-next" onclick="goTo(2)">Continue →</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Contact Information -->
+            <div class="step-panel" id="panel2">
+                <div class="form-header">
+                    <h2>Contact Information</h2>
+                    <p>How can we reach you?</p>
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label>First Name</label>
+                        <input type="text" id="fname" placeholder="Rahul" />
+                    </div>
+                    <div class="field">
+                        <label>Last Name</label>
+                        <input type="text" id="lname" placeholder="Sharma" />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Email Address</label>
+                    <input type="email" id="email" placeholder="rahul@example.com" />
+                </div>
+
+                <div class="field">
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" placeholder="+91 98765 43210" />
+                </div>
+
+                <div class="field">
+                    <label>City / State</label>
+                    <input type="text" id="city" placeholder="Mumbai, Maharashtra" />
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn btn-back" onclick="goTo(1)">← Back</button>
+                    <button class="btn btn-next" onclick="goTo(3)">Continue →</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Review & Submit -->
+            <div class="step-panel" id="panel3">
+                <div class="form-header">
+                    <h2>Review & Submit</h2>
+                    <p>Please confirm your details before submitting.</p>
+                </div>
+
+                <div class="summary">
+                    <div class="summary-title">Organization</div>
+                    <div class="summary-row"><span>Country</span><span id="rev-country">—</span></div>
+                    <div class="summary-row"><span>Role</span><span id="rev-role">—</span></div>
+                    <div class="summary-row"><span>Organization</span><span id="rev-org">—</span></div>
+                </div>
+
+                <div class="summary">
+                    <div class="summary-title">Contact</div>
+                    <div class="summary-row"><span>Name</span><span id="rev-name">—</span></div>
+                    <div class="summary-row"><span>Email</span><span id="rev-email">—</span></div>
+                    <div class="summary-row"><span>Phone</span><span id="rev-phone">—</span></div>
+                    <div class="summary-row"><span>City</span><span id="rev-city">—</span></div>
+                </div>
+
+                <div class="btn-row" style="flex-direction:column; gap:10px;">
+                    <button class="btn btn-submit" onclick="submitForm()">✓ Submit Registration</button>
+                    <button class="btn btn-back" onclick="goTo(2)">← Back</button>
+                </div>
+            </div>
+
+            <!-- Success Screen -->
+            <div class="success-screen" id="successScreen">
+                <div class="success-icon">✓</div>
+                <h2>Submit Successfully!</h2>
+                <p>Your registration has been completed.<br />We'll be in touch with you soon.</p>
+                <div class="success-tag">Registration Complete</div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <script>
+        const iconBtns = document.querySelectorAll('.icon-btn');
+        const infoCards = document.querySelectorAll('.info-card');
+        let currentActive = null;
+
+        function activate(target) {
+            // Deactivate all
+            iconBtns.forEach(b => b.classList.remove('active'));
+            infoCards.forEach(c => c.classList.remove('active'));
+
+            if (currentActive === target) {
+                currentActive = null;
+                return;
+            }
+
+            // Activate matching
+            iconBtns.forEach(b => { if (b.dataset.target === target) b.classList.add('active'); });
+            infoCards.forEach(c => { if (c.dataset.card === target) c.classList.add('active'); });
+
+            currentActive = target;
+
+            // Update wheel center text
+            const titles = {
+                top: 'Top-Rated Professionals',
+                right: 'Satisfaction Guaranteed',
+                bottom: 'Passionate Care',
+                left: 'Trauma & Empowerment'
+            };
+            document.querySelector('.wheel-center-label').textContent = titles[target] || 'Hover an icon to learn more';
+        }
+
+        iconBtns.forEach(btn => {
+            // Hover (desktop)
+            btn.addEventListener('mouseenter', () => activate(btn.dataset.target));
+            btn.addEventListener('mouseleave', () => {
+                if (window.innerWidth >= 768) {
+                    btn.classList.remove('active');
+                    infoCards.forEach(c => { if (c.dataset.card === btn.dataset.target) c.classList.remove('active'); });
+                    currentActive = null;
+                    document.querySelector('.wheel-center-label').textContent = 'Hover an icon\nto learn more';
+                }
+            });
+            // Click (mobile)
+            btn.addEventListener('click', () => activate(btn.dataset.target));
+        });
+
+        // Cards also clickable
+        infoCards.forEach(card => {
+            card.addEventListener('click', () => activate(card.dataset.card));
+        });
+
+
+        // ---- DESKTOP TABS ----
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabPanels.forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // ---- MOBILE ACCORDION ----
+        const accTriggers = document.querySelectorAll('.acc-trigger');
+
+        accTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const id = trigger.dataset.acc;
+                const content = document.getElementById('acc-' + id);
+                const isOpen = trigger.classList.contains('open');
+
+                // Close all
+                accTriggers.forEach(t => t.classList.remove('open'));
+                document.querySelectorAll('.acc-content').forEach(c => c.classList.remove('open'));
+
+                // Open clicked if it was closed
+                if (!isOpen) {
+                    trigger.classList.add('open');
+                    content.classList.add('open');
+                }
+            });
+        });
+
+
+        // ---- Determine cards per view ----
+        function cardsPerView() {
+            return window.innerWidth <= 600 ? 1 : 3;
+        }
+
+        const track = document.getElementById('track');
+        const cards = Array.from(document.querySelectorAll('.ba-card'));
+        const total = cards.length;
+        let currentIndex = 0;
+
+        function getCardWidth() {
+            return cards[0].getBoundingClientRect().width;
+        }
+
+        function getGap() {
+            return window.innerWidth <= 600 ? 0 : 14;
+        }
+
+        function updateTrack() {
+            const cw = getCardWidth();
+            const gap = getGap();
+            track.style.transform = `translateX(-${currentIndex * (cw + gap)}px)`;
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentIndex > 0) { currentIndex--; updateTrack(); }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            const cpv = cardsPerView();
+            if (currentIndex < total - cpv) { currentIndex++; updateTrack(); }
+        });
+
+        window.addEventListener('resize', () => {
+            currentIndex = 0;
+            updateTrack();
+            cards.forEach(card => initCard(card));
+        });
+
+        // ---- Before/After drag logic ----
+        function initCard(card) {
+            const afterWrap = card.querySelector('.after-wrap');
+            const divider = card.querySelector('.divider');
+            const handle = card.querySelector('.handle');
+            const afterImg = card.querySelector('.img-after');
+            let dragging = false;
+
+            function setSplit(pct) {
+                pct = Math.max(5, Math.min(95, pct));
+                afterWrap.style.width = pct + '%';
+                afterImg.style.width = card.offsetWidth + 'px';
+                afterImg.style.maxWidth = 'none';
+                divider.style.left = pct + '%';
+                handle.style.left = pct + '%';
+            }
+
+            function fixAfterImg() {
+                afterImg.style.width = card.offsetWidth + 'px';
+                afterImg.style.maxWidth = 'none';
+            }
+
+            setSplit(50);
+            fixAfterImg();
+
+            function getX(e) {
+                return e.touches ? e.touches[0].clientX : e.clientX;
+            }
+
+            function onMove(e) {
+                if (!dragging) return;
+                e.preventDefault();
+                const rect = card.getBoundingClientRect();
+                const x = getX(e) - rect.left;
+                const pct = (x / rect.width) * 100;
+                setSplit(pct);
+                fixAfterImg();
+            }
+
+            card.addEventListener('mousedown', e => { dragging = true; onMove(e); });
+            card.addEventListener('touchstart', e => { dragging = true; onMove(e); }, { passive: false });
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('touchmove', onMove, { passive: false });
+            window.addEventListener('mouseup', () => dragging = false);
+            window.addEventListener('touchend', () => dragging = false);
+        }
+
+        cards.forEach(initCard);
+
+
+
+        let currentStep = 1;
+
+        function goTo(step) {
+            // Hide current
+            document.getElementById('panel' + currentStep).classList.remove('active');
+
+            // If going to step 3, fill review
+            if (step === 3) fillReview();
+
+            // Show new
+            document.getElementById('panel' + step).classList.add('active');
+            currentStep = step;
+            updateTracker(step);
+        }
+
+        function updateTracker(step) {
+            for (let i = 1; i <= 3; i++) {
+                const dot = document.getElementById('dot' + i);
+                const lbl = document.getElementById('lbl' + i);
+                dot.className = 'step-dot';
+                lbl.className = 'step-label';
+
+                if (i < step) {
+                    dot.classList.add('done');
+                    dot.innerHTML = '✓';
+                } else if (i === step) {
+                    dot.classList.add('active');
+                    dot.innerHTML = i;
+                    lbl.classList.add('active');
+                } else {
+                    dot.classList.add('inactive');
+                    dot.innerHTML = i;
+                }
+            }
+
+            // Lines
+            document.getElementById('line1').className = 'step-line' + (step > 1 ? ' filled' : '');
+            document.getElementById('line2').className = 'step-line' + (step > 2 ? ' filled' : '');
+        }
+
+        function fillReview() {
+            const val = id => document.getElementById(id).value || '—';
+            document.getElementById('rev-country').textContent = val('country');
+            document.getElementById('rev-role').textContent = val('role');
+            document.getElementById('rev-org').textContent = val('orgName');
+
+            const fname = val('fname'), lname = val('lname');
+            document.getElementById('rev-name').textContent = (fname !== '—' || lname !== '—') ? `${fname} ${lname}`.trim() : '—';
+            document.getElementById('rev-email').textContent = val('email');
+            document.getElementById('rev-phone').textContent = val('phone');
+            document.getElementById('rev-city').textContent = val('city');
+        }
+
+        function submitForm() {
+            // Hide panels & tracker
+            document.getElementById('panel3').classList.remove('active');
+            document.getElementById('stepTracker').style.display = 'none';
+            document.getElementById('stepLabels').style.display = 'none';
+
+            // Show success
+            document.getElementById('successScreen').classList.add('active');
+        }
+    </script>
+</body>
+
+</html>
